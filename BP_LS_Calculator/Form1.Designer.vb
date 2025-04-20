@@ -23,23 +23,16 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Button1 = New Button()
-        DataGridView1 = New DataGridView()
-        Nom = New DataGridViewTextBoxColumn()
-        Prenom = New DataGridViewTextBoxColumn()
-        Licence = New DataGridViewTextBoxColumn()
-        Cotation = New DataGridViewTextBoxColumn()
-        NbVictoire = New DataGridViewTextBoxColumn()
-        SommePoints = New DataGridViewTextBoxColumn()
-        TieBreaker = New DataGridViewTextBoxColumn()
-        SplitContainer1 = New SplitContainer()
+        Button2 = New Button()
         buttonExportCSV = New Button()
         PictureBox1 = New PictureBox()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
-        SplitContainer1.Panel1.SuspendLayout()
-        SplitContainer1.Panel2.SuspendLayout()
-        SplitContainer1.SuspendLayout()
+        DataGridView1 = New DataGridView()
+        Panel1 = New Panel()
+        Panel2 = New Panel()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        Panel1.SuspendLayout()
+        Panel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' Button1
@@ -51,79 +44,14 @@ Partial Class Form1
         Button1.Text = "Ouvrir fichier Cotcot"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' DataGridView1
+        ' Button2
         ' 
-        DataGridView1.AllowUserToOrderColumns = True
-        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Nom, Prenom, Licence, Cotation, NbVictoire, SommePoints, TieBreaker})
-        DataGridView1.Dock = DockStyle.Fill
-        DataGridView1.Location = New Point(0, 0)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(649, 365)
-        DataGridView1.TabIndex = 4
-        ' 
-        ' Nom
-        ' 
-        Nom.DataPropertyName = "Nom"
-        Nom.HeaderText = "Nom"
-        Nom.Name = "Nom"
-        ' 
-        ' Prenom
-        ' 
-        Prenom.DataPropertyName = "Prenom"
-        Prenom.HeaderText = "Prénom"
-        Prenom.Name = "Prenom"
-        ' 
-        ' Licence
-        ' 
-        Licence.DataPropertyName = "NumLicence"
-        Licence.HeaderText = "Licence"
-        Licence.Name = "Licence"
-        ' 
-        ' Cotation
-        ' 
-        Cotation.DataPropertyName = "Stats.PointsCotation"
-        Cotation.HeaderText = "Cotation"
-        Cotation.Name = "Cotation"
-        ' 
-        ' NbVictoire
-        ' 
-        NbVictoire.DataPropertyName = "Stats.NbVictoires"
-        NbVictoire.HeaderText = "NbVictoire"
-        NbVictoire.Name = "NbVictoire"
-        ' 
-        ' SommePoints
-        ' 
-        SommePoints.DataPropertyName = "Stats.SommePoints"
-        SommePoints.HeaderText = "SommePoints"
-        SommePoints.Name = "SommePoints"
-        ' 
-        ' TieBreaker
-        ' 
-        TieBreaker.DataPropertyName = "Stats.TieBreaker"
-        TieBreaker.HeaderText = "TieBreaker"
-        TieBreaker.Name = "TieBreaker"
-        ' 
-        ' SplitContainer1
-        ' 
-        SplitContainer1.Dock = DockStyle.Fill
-        SplitContainer1.Location = New Point(0, 0)
-        SplitContainer1.Name = "SplitContainer1"
-        SplitContainer1.Orientation = Orientation.Horizontal
-        ' 
-        ' SplitContainer1.Panel1
-        ' 
-        SplitContainer1.Panel1.Controls.Add(buttonExportCSV)
-        SplitContainer1.Panel1.Controls.Add(PictureBox1)
-        SplitContainer1.Panel1.Controls.Add(Button1)
-        ' 
-        ' SplitContainer1.Panel2
-        ' 
-        SplitContainer1.Panel2.Controls.Add(DataGridView1)
-        SplitContainer1.Size = New Size(649, 450)
-        SplitContainer1.SplitterDistance = 81
-        SplitContainer1.TabIndex = 5
+        Button2.Location = New Point(250, 12)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(113, 46)
+        Button2.TabIndex = 3
+        Button2.Text = "Créer Fichier Classement "
+        Button2.UseVisualStyleBackColor = True
         ' 
         ' buttonExportCSV
         ' 
@@ -136,43 +64,71 @@ Partial Class Form1
         ' 
         ' PictureBox1
         ' 
+        PictureBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         PictureBox1.Image = My.Resources.Resources.ASL_FFE___Logo_noir_BANNIERE
         PictureBox1.ImageLocation = ""
-        PictureBox1.Location = New Point(400, 6)
+        PictureBox1.Location = New Point(430, 3)
         PictureBox1.Name = "PictureBox1"
         PictureBox1.Size = New Size(243, 70)
         PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 1
         PictureBox1.TabStop = False
         ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.AllowUserToOrderColumns = True
+        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Dock = DockStyle.Fill
+        DataGridView1.Location = New Point(0, 0)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.Size = New Size(683, 359)
+        DataGridView1.TabIndex = 7
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(Button1)
+        Panel1.Controls.Add(Button2)
+        Panel1.Controls.Add(PictureBox1)
+        Panel1.Controls.Add(buttonExportCSV)
+        Panel1.Dock = DockStyle.Top
+        Panel1.Location = New Point(0, 0)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(685, 76)
+        Panel1.TabIndex = 8
+        ' 
+        ' Panel2
+        ' 
+        Panel2.BorderStyle = BorderStyle.FixedSingle
+        Panel2.Controls.Add(DataGridView1)
+        Panel2.Dock = DockStyle.Fill
+        Panel2.Location = New Point(0, 76)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(685, 361)
+        Panel2.TabIndex = 9
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(649, 450)
-        Controls.Add(SplitContainer1)
+        ClientSize = New Size(685, 437)
+        Controls.Add(Panel2)
+        Controls.Add(Panel1)
         Name = "Form1"
         Text = "Form1"
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer1.Panel1.ResumeLayout(False)
-        SplitContainer1.Panel2.ResumeLayout(False)
-        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer1.ResumeLayout(False)
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        Panel1.ResumeLayout(False)
+        Panel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents Button1 As Button
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents Nom As DataGridViewTextBoxColumn
-    Friend WithEvents Prenom As DataGridViewTextBoxColumn
-    Friend WithEvents Licence As DataGridViewTextBoxColumn
-    Friend WithEvents Cotation As DataGridViewTextBoxColumn
-    Friend WithEvents NbVictoire As DataGridViewTextBoxColumn
-    Friend WithEvents SommePoints As DataGridViewTextBoxColumn
-    Friend WithEvents TieBreaker As DataGridViewTextBoxColumn
-    Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents buttonExportCSV As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
 
 End Class

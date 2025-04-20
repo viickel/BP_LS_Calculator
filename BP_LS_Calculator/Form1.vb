@@ -294,6 +294,31 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim saveFileDialog As New SaveFileDialog()
+        saveFileDialog.Filter = "Fichiers Texte (*.txt)|*.txt|Tous les fichiers (*.*)|*.*"
+        saveFileDialog.Title = "Exporter le classement en fichier texte"
+        saveFileDialog.FileName = "Classement.txt"
+
+        If saveFileDialog.ShowDialog() = DialogResult.OK Then
+            Try
+                Using writer As New StreamWriter(saveFileDialog.FileName)
+                    ' Écrire l'en-tête (facultatif)
+                    writer.WriteLine("TIREURS")
 
 
+                    ' Parcourir la liste des combattants (qui est déjà triée)
+                    For i As Integer = 0 To ListeCombatants.Count - 1
+                        Dim combattant As CombatantInfo = ListeCombatants(i)
+                        writer.WriteLine($"{combattant.Nom}/{combattant.Prenom}/{i + 1}")
+                    Next
+
+                    MessageBox.Show("Le classement a été exporté avec succès vers un fichier texte.", "Exportation réussie", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Erreur lors de l'exportation vers TXT : " & ex.Message, "Erreur d'exportation", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+    End Sub
 End Class
