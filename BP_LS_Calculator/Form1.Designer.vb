@@ -115,7 +115,7 @@ Partial Class Form1
         Controls.Add(Panel2)
         Controls.Add(Panel1)
         Name = "Form1"
-        Text = "Form1"
+        Text = "BP LS Calculator"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         Panel1.ResumeLayout(False)
