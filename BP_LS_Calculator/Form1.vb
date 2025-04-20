@@ -1,4 +1,7 @@
 ﻿Imports System.Xml
+Imports System.Drawing.Printing
+Imports System.Data.Common
+Imports System.IO
 
 
 Public Class Form1
@@ -56,15 +59,36 @@ Public Class Form1
 
         If OpenFileDialog.ShowDialog() = DialogResult.OK Then
             Dim sCheminFichier As String = OpenFileDialog.FileName
-            ListeCombatants.Clear()
-            CotcotReader(sCheminFichier)
 
-
+            ' Vérifier la présence de la balise <PhaseDeTableaux>
+            If DetecterPhaseDeTableaux(sCheminFichier) Then
+                MessageBox.Show("Un tableau à élimination est déjà en cours dans ce fichier. Ce logiciel sert uniquement à calculer le classement sur les phases de poules.", "Erreur : Tableau détecté", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Else
+                ' Réinitialiser la liste des combattants avant de lire un nouveau fichier
+                ListeCombatants.Clear()
+                CotcotReader(sCheminFichier)
+            End If
         End If
+
 
     End Sub
 
+    Private Function DetecterPhaseDeTableaux(filePath As String) As Boolean
+        Try
+            Dim settings As New XmlReaderSettings()
+            settings.DtdProcessing = DtdProcessing.Parse
 
+            Using reader As XmlReader = XmlReader.Create(filePath, settings)
+                Return reader.ReadToFollowing("PhaseDeTableaux")
+            End Using
+
+        Catch ex As Exception
+            ' En cas d'erreur lors de la lecture du fichier, considérer qu'il n'y a pas de tableau
+            ' ou afficher un message d'erreur plus spécifique si nécessaire.
+            Console.WriteLine($"Erreur lors de la vérification du fichier : {ex.Message}")
+            Return False
+        End Try
+    End Function
 
     Private Sub CotcotReader(sFilePath As String)
         Try
@@ -205,9 +229,9 @@ Public Class Form1
             Me.DataGridView1.Columns.Add("Nom", "Nom")
             Me.DataGridView1.Columns.Add("Prenom", "Prénom")
             Me.DataGridView1.Columns.Add("NumLicence", "Licence")
-            Me.DataGridView1.Columns.Add("PointsCotation", "Cotation")
-            Me.DataGridView1.Columns.Add("NbVictoires", "NbVictoires")
-            Me.DataGridView1.Columns.Add("SommePoints", "SommePoints")
+            Me.DataGridView1.Columns.Add("Cotation", "Cotation")
+            Me.DataGridView1.Columns.Add("Nb Victoires", "NbVictoires")
+            Me.DataGridView1.Columns.Add("Points Total", "Points Total")
             Me.DataGridView1.Columns.Add("TieBreaker", "TieBreaker")
 
             ' Remplis les lignes avec les données de ListeCombatants
@@ -221,5 +245,55 @@ Public Class Form1
 
         End If
     End Sub
+
+
+
+    Private Sub buttonExportCSV_Click(sender As Object, e As EventArgs) Handles buttonExportCSV.Click
+        Dim saveFileDialog As New SaveFileDialog()
+        saveFileDialog.Filter = "Fichiers CSV (*.csv)|*.csv|Tous les fichiers (*.*)|*.*"
+        saveFileDialog.Title = "Exporter le classement en CSV"
+        saveFileDialog.FileName = "Classement.csv"
+
+        If saveFileDialog.ShowDialog() = DialogResult.OK Then
+            Try
+                Using writer As New StreamWriter(saveFileDialog.FileName)
+                    ' Écrire les en-têtes de colonnes
+                    Dim headerLine As New System.Text.StringBuilder()
+                    headerLine.Append("Classement,")
+                    For i As Integer = 1 To DataGridView1.Columns.Count - 1 ' Commencer à 1 pour ignorer la colonne Classement (déjà ajoutée)
+                        headerLine.Append(DataGridView1.Columns(i).HeaderText)
+                        If i < DataGridView1.Columns.Count - 1 Then
+                            headerLine.Append(",")
+                        End If
+                    Next
+                    writer.WriteLine(headerLine.ToString())
+
+                    ' Écrire les données des combattants
+                    For i As Integer = 0 To ListeCombatants.Count - 1
+                        Dim combattant As CombatantInfo = ListeCombatants(i)
+                        Dim dataLine As New System.Text.StringBuilder()
+                        dataLine.Append($"{i + 1},") ' Classement
+
+                        dataLine.Append($"{combattant.Nom},")
+                        dataLine.Append($"{combattant.Prenom},")
+                        dataLine.Append($"{combattant.NumLicence},")
+                        dataLine.Append($"{combattant.Stats.PointsCotation},")
+                        dataLine.Append($"{combattant.Stats.NbVictoires},")
+                        dataLine.Append($"{combattant.Stats.SommePoints},")
+                        dataLine.Append($"{combattant.Stats.TieBreaker}")
+
+                        writer.WriteLine(dataLine.ToString())
+                    Next
+
+                    MessageBox.Show("Le classement a été exporté avec succès vers un fichier CSV.", "Exportation réussie", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Erreur lors de l'exportation vers CSV : " & ex.Message, "Erreur d'exportation", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+    End Sub
+
+
 
 End Class

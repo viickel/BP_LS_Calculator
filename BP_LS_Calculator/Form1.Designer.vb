@@ -32,6 +32,7 @@ Partial Class Form1
         SommePoints = New DataGridViewTextBoxColumn()
         TieBreaker = New DataGridViewTextBoxColumn()
         SplitContainer1 = New SplitContainer()
+        buttonExportCSV = New Button()
         PictureBox1 = New PictureBox()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
@@ -113,6 +114,7 @@ Partial Class Form1
         ' 
         ' SplitContainer1.Panel1
         ' 
+        SplitContainer1.Panel1.Controls.Add(buttonExportCSV)
         SplitContainer1.Panel1.Controls.Add(PictureBox1)
         SplitContainer1.Panel1.Controls.Add(Button1)
         ' 
@@ -122,6 +124,15 @@ Partial Class Form1
         SplitContainer1.Size = New Size(649, 450)
         SplitContainer1.SplitterDistance = 81
         SplitContainer1.TabIndex = 5
+        ' 
+        ' buttonExportCSV
+        ' 
+        buttonExportCSV.Location = New Point(131, 12)
+        buttonExportCSV.Name = "buttonExportCSV"
+        buttonExportCSV.Size = New Size(113, 46)
+        buttonExportCSV.TabIndex = 2
+        buttonExportCSV.Text = "Exporter en CSV"
+        buttonExportCSV.UseVisualStyleBackColor = True
         ' 
         ' PictureBox1
         ' 
@@ -162,5 +173,6 @@ Partial Class Form1
     Friend WithEvents TieBreaker As DataGridViewTextBoxColumn
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents buttonExportCSV As Button
 
 End Class
