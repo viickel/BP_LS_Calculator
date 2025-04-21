@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Button1 = New Button()
         Button2 = New Button()
         buttonExportCSV = New Button()
@@ -37,27 +38,30 @@ Partial Class Form1
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(12, 12)
+        Button1.Location = New Point(14, 16)
+        Button1.Margin = New Padding(3, 4, 3, 4)
         Button1.Name = "Button1"
-        Button1.Size = New Size(113, 46)
+        Button1.Size = New Size(129, 61)
         Button1.TabIndex = 0
         Button1.Text = "Ouvrir fichier Cotcot"
         Button1.UseVisualStyleBackColor = True
         ' 
         ' Button2
         ' 
-        Button2.Location = New Point(250, 12)
+        Button2.Location = New Point(286, 16)
+        Button2.Margin = New Padding(3, 4, 3, 4)
         Button2.Name = "Button2"
-        Button2.Size = New Size(113, 46)
+        Button2.Size = New Size(129, 61)
         Button2.TabIndex = 3
         Button2.Text = "Créer Fichier Classement "
         Button2.UseVisualStyleBackColor = True
         ' 
         ' buttonExportCSV
         ' 
-        buttonExportCSV.Location = New Point(131, 12)
+        buttonExportCSV.Location = New Point(150, 16)
+        buttonExportCSV.Margin = New Padding(3, 4, 3, 4)
         buttonExportCSV.Name = "buttonExportCSV"
-        buttonExportCSV.Size = New Size(113, 46)
+        buttonExportCSV.Size = New Size(129, 61)
         buttonExportCSV.TabIndex = 2
         buttonExportCSV.Text = "Exporter en CSV"
         buttonExportCSV.UseVisualStyleBackColor = True
@@ -67,9 +71,10 @@ Partial Class Form1
         PictureBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         PictureBox1.Image = My.Resources.Resources.ASL_FFE___Logo_noir_BANNIERE
         PictureBox1.ImageLocation = ""
-        PictureBox1.Location = New Point(430, 3)
+        PictureBox1.Location = New Point(491, 4)
+        PictureBox1.Margin = New Padding(3, 4, 3, 4)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(243, 70)
+        PictureBox1.Size = New Size(278, 93)
         PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 1
         PictureBox1.TabStop = False
@@ -81,8 +86,10 @@ Partial Class Form1
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridView1.Dock = DockStyle.Fill
         DataGridView1.Location = New Point(0, 0)
+        DataGridView1.Margin = New Padding(3, 4, 3, 4)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(683, 359)
+        DataGridView1.RowHeadersWidth = 51
+        DataGridView1.Size = New Size(781, 480)
         DataGridView1.TabIndex = 7
         ' 
         ' Panel1
@@ -93,8 +100,9 @@ Partial Class Form1
         Panel1.Controls.Add(buttonExportCSV)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(0, 0)
+        Panel1.Margin = New Padding(3, 4, 3, 4)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(685, 76)
+        Panel1.Size = New Size(783, 101)
         Panel1.TabIndex = 8
         ' 
         ' Panel2
@@ -102,18 +110,21 @@ Partial Class Form1
         Panel2.BorderStyle = BorderStyle.FixedSingle
         Panel2.Controls.Add(DataGridView1)
         Panel2.Dock = DockStyle.Fill
-        Panel2.Location = New Point(0, 76)
+        Panel2.Location = New Point(0, 101)
+        Panel2.Margin = New Padding(3, 4, 3, 4)
         Panel2.Name = "Panel2"
-        Panel2.Size = New Size(685, 361)
+        Panel2.Size = New Size(783, 482)
         Panel2.TabIndex = 9
         ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(685, 437)
+        ClientSize = New Size(783, 583)
         Controls.Add(Panel2)
         Controls.Add(Panel1)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Margin = New Padding(3, 4, 3, 4)
         Name = "Form1"
         Text = "BP LS Calculator"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()

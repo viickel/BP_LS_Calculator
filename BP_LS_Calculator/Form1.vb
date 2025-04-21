@@ -2,6 +2,7 @@
 Imports System.Drawing.Printing
 Imports System.Data.Common
 Imports System.IO
+Imports System.Net.Security
 
 
 Public Class Form1
@@ -41,6 +42,7 @@ Public Class Form1
         Public Nom As String
         Public Prenom As String
         Public NumLicence As String
+        Public Statut As String
         Public Stats As New CombattantStats()
     End Class
 
@@ -107,7 +109,8 @@ Public Class Form1
                             .ID = reader.GetAttribute("ID"),
                             .Nom = reader.GetAttribute("Nom"),
                             .Prenom = reader.GetAttribute("Prenom"),
-                            .NumLicence = reader.GetAttribute("Licence")
+                            .NumLicence = reader.GetAttribute("Licence"),
+                            .Statut = reader.GetAttribute("Statut")
                         }
                             ListeCombatants.Add(nouveauCombattant)
                         ElseIf reader.NodeType = XmlNodeType.EndElement AndAlso reader.Name = "Tireurs" Then
@@ -173,6 +176,11 @@ Public Class Form1
                 End If
 
 
+                'Suppression de la liste de combatant des personne absente et ayant recu un carton noire, les abandon sont garder mais les points sont a zero (abandon gerer par belle poule)
+                ListeCombatants.RemoveAll(Function(combattant)
+                                              Return combattant.Statut.ToUpper() = "F" OrElse combattant.Statut.ToUpper() = "E"
+                                          End Function)
+
 
                 AffichageDataGrid()
 
@@ -234,12 +242,33 @@ Public Class Form1
             Me.DataGridView1.Columns.Add("Points Total", "Points Total")
             Me.DataGridView1.Columns.Add("TieBreaker", "TieBreaker")
 
+            Dim iExaequoCounter As Integer = 0
+
             ' Remplis les lignes avec les données de ListeCombatants
             For i As Integer = 0 To ListeCombatants.Count - 1
                 Dim combattant As CombatantInfo = ListeCombatants(i)
-                Me.DataGridView1.Rows.Add(i + 1, combattant.Nom, combattant.Prenom, combattant.NumLicence,
+
+                If combattant.Stats.PointsCotation <> 0 AndAlso
+                    combattant.Stats.SommePoints <> 0 AndAlso
+                    combattant.Stats.NbVictoires <> 0 AndAlso
+                    combattant.Stats.TieBreaker <> 0 Then
+                    Me.DataGridView1.Rows.Add(i + 1, combattant.Nom, combattant.Prenom, combattant.NumLicence,
                                            combattant.Stats.PointsCotation, combattant.Stats.NbVictoires,
                                            combattant.Stats.SommePoints, combattant.Stats.TieBreaker)
+
+                    'si les dernier on 0 de partout ils sont ex aequo dans le classement (si il y a des abandon bellpoule les met a 0 points)
+                ElseIf combattant.Stats.PointsCotation = 0 AndAlso
+                    combattant.Stats.SommePoints = 0 AndAlso
+                    combattant.Stats.NbVictoires = 0 AndAlso
+                    combattant.Stats.TieBreaker = 0 Then
+
+                    Me.DataGridView1.Rows.Add((i + 1 - iExaequoCounter), combattant.Nom, combattant.Prenom, combattant.NumLicence,
+                                           combattant.Stats.PointsCotation, combattant.Stats.NbVictoires,
+                                           combattant.Stats.SommePoints, combattant.Stats.TieBreaker)
+
+                    iExaequoCounter += 1
+                End If
+
             Next
 
 
